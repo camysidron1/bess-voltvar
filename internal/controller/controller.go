@@ -22,6 +22,12 @@ type Status struct {
 	Derate       float64 `json:"derate"`
 	GridTied     bool    `json:"grid_tied"`
 	LastTickMs   int64   `json:"last_tick_ms"`
+
+	// §5.4.1 Monitoring rules — expose measured values at interconnection point
+	Voltage_kV   float64 `json:"voltage_kv"`
+	Frequency_Hz float64 `json:"frequency_hz"`
+	Active_P_MW  float64 `json:"active_power_mw"`
+	Reactive_Q_MVAr float64 `json:"reactive_power_mvar"`
 }
 
 type Controller struct {
@@ -148,7 +154,7 @@ func (c *Controller) step() {
 func (c *Controller) Status() Status {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
-	return Status{
+	st := Status{
 		Mode:       c.cfg.Mode,
 		VPUPresent: c.vFilt,
 		QSetMVAr:   c.qCmd,
@@ -158,6 +164,12 @@ func (c *Controller) Status() Status {
 		GridTied:   c.meas.Get().GridTied,
 		LastTickMs: c.tick.Milliseconds(),
 	}
+	me := c.meas.get()
+	st.Voltage_kV = me.VPCC_kV
+	st.Frequency_Hz = me.F_Hz
+	st.Active_P_MW = me.P_MW
+	st.Reactive_Q_MVAr = me.Q_MVAr
+	return st
 }
 
 func (c *Controller) UpdateConfig(newCfg *config.Config) {
