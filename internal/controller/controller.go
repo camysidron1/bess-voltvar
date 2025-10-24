@@ -27,7 +27,6 @@ type Status struct {
 	Voltage_kV   float64 `json:"voltage_kv"`
 	Frequency_Hz float64 `json:"frequency_hz"`
 	Active_P_MW  float64 `json:"active_power_mw"`
-	Reactive_Q_MVAr float64 `json:"reactive_power_mvar"`
 }
 
 type Controller struct {
@@ -168,7 +167,6 @@ func (c *Controller) Status() Status {
 	st.Voltage_kV = me.VPCC_kV
 	st.Frequency_Hz = me.F_Hz
 	st.Active_P_MW = me.P_MW
-	st.Reactive_Q_MVAr = me.Q_MVAr
 	return st
 }
 
