@@ -6,7 +6,6 @@ type Measurements struct {
 	VPCC_kV      float64
 	VNom_kV      float64
 	P_MW         float64
-	Q_MVAr       float64
 	GridTied     bool
 	ThermalDerate float64
 }
@@ -26,7 +25,7 @@ func NewLocalMeasurements() *LocalMeasurements {
 	return &LocalMeasurements{
 		val: Measurements{
 			VPCC_kV: 13.8, VNom_kV: 13.8,
-			P_MW: 0.0, Q_MVAr: 0.0,
+			P_MW: 0.0,
 			GridTied: true, ThermalDerate: 1.0,
 		},
 	}
