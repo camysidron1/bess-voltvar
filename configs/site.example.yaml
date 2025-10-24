@@ -1,0 +1,22 @@
+version: 1
+mode: VOLT_VAR        # VOLT_VAR | CONST_PF | CONST_Q | REMOTE
+pf_setpoint: 0.98
+q_setpoint_mvar: 0.5
+
+volt_var:
+  v_deadband_pu: [0.985, 1.015]
+  v_q_points_pu:
+    - [0.94, 1.00]
+    - [0.985, 0.00]
+    - [1.015, 0.00]
+    - [1.06, -1.00]
+
+limits:
+  s_rating_mva: 5.5
+  q_max_abs_mvar: 5.5
+  q_ramp_mvar_per_s: 0.5
+  v_lpf_tau_s: 0.2
+
+fallbacks:
+  remote_timeout_s: 5
+  default_mode: VOLT_VAR
